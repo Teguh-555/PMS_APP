@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pesan Hangat Hari Ini 💖</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🌸 Kirana's PMS Corner 🌸</h1>
+    <p class="intro">Klik tombol nya sayang 💌</p>
+    <div id="message" class="message-box">Memuat pesan...</div>
+    <button onclick="generateMessage()">Tampilkan Pesan Baru</button>
+  </div>
+
+  <script src="messages.js"></script>
+  <script>
+    function generateMessage() {
+      const box = document.getElementById('message');
+      const randomIndex = Math.floor(Math.random() * messages.length);
+      box.textContent = messages[randomIndex];
+    }
+
+    // Show a message on first load
+    window.onload = generateMessage;
+  </script>
+</body>
+</html>
