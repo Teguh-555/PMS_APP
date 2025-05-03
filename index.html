@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PMS Comfort Corner 🌸</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🌸 PMS Comfort Corner 🌸</h1>
+    <p>Your gentle hug for today 💕</p>
+    <div id="dailyMessage" class="response">Loading comforting words...</div>
+
+    <p style="margin-top: 2rem;">Need another one?</p>
+    <button onclick="generateAIMessage()">Show More 💗</button>
+  </div>
+
+  <script>
+    // Function to generate AI messages dynamically
+    async function generateAIMessage() {
+      const messageBox = document.getElementById("dailyMessage");
+      messageBox.textContent = "Sending comfort from the cloud... ☁️💗";  // Temporary text
+
+      const headers = {
+        "Authorization": "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",  // Replace with your Hugging Face API key
+        "Content-Type": "application/json"
+      };
+
+      const body = {
+        inputs: "Write a short comforting message for someone having PMS or feeling emotionally down. Make it caring, under 50 words.",
+        parameters: {
+          max_new_tokens: 150,  // You can increase this if you want more content
+          temperature: 0.9  // Randomness for more unique responses
+        }
+      };
+
+      try {
+        // Send a POST request to Hugging Face API
+        const response = await fetch("https://api-inference.huggingface.co/models/gpt2", {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify(body)
+        });
+
+        // Handle the response
+        const data = await response.json();
+        const output = data[0]?.generated_text || "You're doing great. Remember to be gentle with yourself. 💗";
+        
+        // Trim and display only the relevant text
+        const message = output.split("\n")[0].replace(/^(.*?):/, "").trim();
+        messageBox.textContent = message;
+      } catch (error) {
+        console.error(error);
+        messageBox.textContent = "Oops! Couldn't fetch a message. You're still loved 🌷";
+      }
+    }
+
+    // Call the function initially to generate the first message
+    generateAIMessage();
+  </script>
+</body>
+</html>
